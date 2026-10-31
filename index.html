@@ -1,0 +1,1028 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SORT Delhi | Smart Waste Management</title>
+
+<style>
+:root {
+  --navy: #102b46;
+  --blue: #1769aa;
+  --green: #16834a;
+  --light: #f3f6fa;
+  --white: #ffffff;
+  --text: #243447;
+  --muted: #718096;
+  --border: #e2e8f0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
+}
+
+header {
+  background: var(--navy);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.logo span { color: #69d69b; }
+
+header small {
+  color: #d6e5f5;
+  display: block;
+  margin-top: 4px;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 14px 24px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+}
+
+nav button {
+  border: 0;
+  padding: 10px 15px;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #526175;
+  font-weight: 600;
+}
+
+nav button.active,
+nav button:hover {
+  background: #eaf2fb;
+  color: var(--blue);
+}
+
+main {
+  max-width: 1400px;
+  margin: auto;
+  padding: 28px;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: 27px;
+  margin: 0 0 8px;
+  color: var(--navy);
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+button, select, input {
+  font: inherit;
+}
+
+.primary {
+  background: var(--blue);
+  color: white;
+  border: 0;
+  padding: 11px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary:hover { background: #12558b; }
+
+.secondary {
+  background: #e9f2fc;
+  color: var(--blue);
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 20px;
+  box-shadow: 0 3px 12px #102b4608;
+}
+
+.metric {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.number {
+  font-size: 29px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.green { color: var(--green); }
+.orange { color: #d97706; }
+.red { color: #dc2626; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 22px;
+  margin-bottom: 18px;
+  min-width: 0;
+}
+
+.panel h2 {
+  font-size: 17px;
+  margin: 0 0 18px;
+  color: var(--navy);
+}
+
+.bar-row {
+  margin-bottom: 17px;
+}
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+
+.bar {
+  height: 9px;
+  background: #edf1f6;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.green-fill { background: #22a06b; }
+.yellow-fill { background: #eab308; }
+.orange-fill { background: #f97316; }
+.red-fill { background: #ef4444; }
+
+.map {
+  min-height: 300px;
+  border-radius: 10px;
+  padding: 18px;
+  background:
+    linear-gradient(45deg, transparent 48%, #ffffffa0 49%, #ffffffa0 51%, transparent 52%),
+    linear-gradient(-35deg, transparent 48%, #ffffffa0 49%, #ffffffa0 51%, transparent 52%),
+    #e7f0e5;
+  background-size: 70px 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+.map::before {
+  content: "";
+  position: absolute;
+  width: 80%;
+  height: 8px;
+  background: #a8c5e2;
+  top: 48%;
+  left: -5%;
+  transform: rotate(-25deg);
+}
+
+.map::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 120%;
+  background: #a8c5e2;
+  top: -10%;
+  left: 55%;
+  transform: rotate(35deg);
+}
+
+.map-label {
+  position: relative;
+  z-index: 1;
+  font-size: 12px;
+  background: white;
+  padding: 7px 10px;
+  border-radius: 7px;
+  display: inline-block;
+  box-shadow: 0 2px 8px #0001;
+}
+
+.pin {
+  position: absolute;
+  z-index: 2;
+  border: 3px solid white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  box-shadow: 0 2px 6px #0003;
+}
+
+.pin.green { background: #22a06b; }
+.pin.yellow { background: #eab308; }
+.pin.orange { background: #f97316; }
+.pin.red { background: #ef4444; }
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 550px;
+}
+
+th, td {
+  text-align: left;
+  padding: 13px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 600;
+  background: #f8fafc;
+}
+
+.status {
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.status.green {
+  background: #e6f7ed;
+  color: #16834a;
+}
+
+.status.orange {
+  background: #fff3df;
+  color: #b45309;
+}
+
+.status.red {
+  background: #feecec;
+  color: #b91c1c;
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.form input, .form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d7e0ea;
+  border-radius: 8px;
+  background: white;
+}
+
+.reward {
+  background: #e8f7ee;
+  padding: 20px;
+  border-radius: 12px;
+  color: #166534;
+  margin-top: 15px;
+}
+
+.reward strong {
+  font-size: 28px;
+}
+
+.notice {
+  background: #fff8e7;
+  border: 1px solid #f3dfad;
+  color: #825c12;
+  padding: 13px 16px;
+  border-radius: 9px;
+  font-size: 12px;
+  margin-bottom: 22px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media(max-width:900px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .layout { grid-template-columns: 1fr; }
+  main { padding: 18px; }
+}
+
+@media(max-width:500px) {
+  .cards { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card { padding: 14px; }
+  .number { font-size: 23px; }
+  header { padding: 18px; }
+  nav { padding: 10px; }
+  nav button { font-size: 12px; padding: 9px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>
+    <div class="logo">SORT <span>DELHI</span></div>
+    <small>Smart Organised Recovery & Transformation</small>
+  </div>
+  <div style="font-size:13px">Municipal Waste Management Prototype</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
+  <button onclick="showPage('citizen',this)">Citizen Portal</button>
+  <button onclick="showPage('recovery',this)">Recovery Network</button>
+  <button onclick="showPage('collection',this)">Collection Tracking</button>
+  <button onclick="showPage('incentives',this)">Incentives</button>
+</nav>
+
+<main>
+
+<div class="notice">
+  DEMONSTRATION MODE: All dashboard figures, transactions, partners and rewards are illustrative. This prototype is not connected to Delhi municipal systems.
+</div>
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+<div class="heading">
+  <div>
+    <h1>Municipal Dashboard</h1>
+    <div class="subtitle">Waste segregation and recovery overview</div>
+  </div>
+  <button class="primary" onclick="refreshDashboard()">Refresh Overview</button>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <div class="metric">Households Registered</div>
+    <div class="number" id="households">2,480</div>
+    <small class="green">Illustrative records</small>
+  </div>
+
+  <div class="card">
+    <div class="metric">Collection Completed</div>
+    <div class="number">86%</div>
+    <small class="green">Illustrative performance</small>
+  </div>
+
+  <div class="card">
+    <div class="metric">Registered Recovery Partners</div>
+    <div class="number" id="partnerCount">24</div>
+    <small>Demo network</small>
+  </div>
+
+  <div class="card">
+    <div class="metric">Reported Issues</div>
+    <div class="number" id="issueCount">18</div>
+    <small class="orange">Illustrative records</small>
+  </div>
+</div>
+
+<div class="layout">
+
+<div class="panel">
+  <h2>Segregation Performance</h2>
+
+  <div class="bar-row">
+    <div class="bar-label"><span>Wet Waste</span><strong>68%</strong></div>
+    <div class="bar"><div class="fill green-fill" style="width:68%"></div></div>
+  </div>
+
+  <div class="bar-row">
+    <div class="bar-label"><span>Dry Waste</span><strong>74%</strong></div>
+    <div class="bar"><div class="fill green-fill" style="width:74%"></div></div>
+  </div>
+
+  <div class="bar-row">
+    <div class="bar-label"><span>Mixed Waste</span><strong>32%</strong></div>
+    <div class="bar"><div class="fill orange-fill" style="width:32%"></div></div>
+  </div>
+
+  <p class="subtitle">Illustrative segregation indicators for demonstration.</p>
+</div>
+
+<div class="panel">
+  <h2>Recovery Network Coverage</h2>
+  <div class="bar-row">
+    <div class="bar-label"><span>Registered Partners</span><strong>24</strong></div>
+    <div class="bar"><div class="fill green-fill" style="width:75%"></div></div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label"><span>Pending Verification</span><strong>6</strong></div>
+    <div class="bar"><div class="fill orange-fill" style="width:25%"></div></div>
+  </div>
+  <p class="subtitle">Partner counts are simulated.</p>
+</div>
+
+</div>
+
+<div class="panel">
+  <h2>Collection and Recovery Records</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Area</th>
+          <th>Waste Type</th>
+          <th>Collection</th>
+          <th>Segregation</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="dashboardTable"></tbody>
+    </table>
+  </div>
+</div>
+
+</section>
+
+<!-- CITIZEN PORTAL -->
+
+<section id="citizen" class="page">
+
+<div class="heading">
+  <div>
+    <h1>Citizen Portal</h1>
+    <div class="subtitle">Segregate waste, report issues and access recovery partners</div>
+  </div>
+</div>
+
+<div class="layout">
+
+<div class="panel">
+  <h2>Report a Collection Issue</h2>
+
+  <form class="form" onsubmit="reportIssue(event)">
+    <div>
+      <label>Area</label>
+      <select id="issueArea" required>
+        <option>Rohini</option>
+        <option>Dwarka</option>
+        <option>Karol Bagh</option>
+        <option>Punjabi Bagh</option>
+        <option>Shahdara</option>
+        <option>Other Delhi Area</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Issue Type</label>
+      <select id="issueType" required>
+        <option>Missed Collection</option>
+        <option>Mixed Waste Collection</option>
+        <option>Overflowing Community Bin</option>
+        <option>Incorrect Waste Disposal</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Description</label>
+      <input id="issueDescription" placeholder="Describe the issue" required>
+    </div>
+
+    <button class="primary">Submit Complaint</button>
+  </form>
+
+  <p id="issueMessage" class="subtitle"></p>
+</div>
+
+<div class="panel">
+  <h2>Segregation Guide</h2>
+
+  <div class="bar-row">
+    <strong class="green">Wet Waste</strong>
+    <p class="subtitle">Food scraps, vegetable peels and biodegradable kitchen waste.</p>
+  </div>
+
+  <div class="bar-row">
+    <strong style="color:#1769aa">Dry Waste</strong>
+    <p class="subtitle">Clean paper, cardboard, plastic, metal and recyclable packaging.</p>
+  </div>
+
+  <div class="bar-row">
+    <strong class="red">Reject / Special Waste</strong>
+    <p class="subtitle">Non-recyclable waste and items requiring separate handling.</p>
+  </div>
+
+  <div class="reward">
+    <div>Your Demonstration Reward Balance</div>
+    <strong id="citizenPoints">150 points</strong>
+    <p class="subtitle">Illustrative points only.</p>
+  </div>
+</div>
+
+</div>
+
+<div class="panel">
+  <h2>My Reported Issues</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Area</th><th>Issue</th><th>Description</th><th>Status</th></tr>
+      </thead>
+      <tbody id="citizenIssues"></tbody>
+    </table>
+  </div>
+</div>
+
+</section>
+
+<!-- RECOVERY NETWORK -->
+
+<section id="recovery" class="page">
+
+<div class="heading">
+  <div>
+    <h1>Registered Recovery Network</h1>
+    <div class="subtitle">Verified demonstration partners for scrap collection and recycling</div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Partner Directory</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Partner</th>
+          <th>Area</th>
+          <th>Material</th>
+          <th>Verification</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="partnerTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Register a Recovery Partner</h2>
+
+  <form class="form" onsubmit="registerPartner(event)">
+    <div>
+      <label>Partner Name</label>
+      <input id="partnerName" required placeholder="Business / recycler name">
+    </div>
+
+    <div>
+      <label>Area</label>
+      <input id="partnerArea" required placeholder="Delhi locality">
+    </div>
+
+    <div>
+      <label>Material Accepted</label>
+      <select id="partnerMaterial">
+        <option>Paper and Cardboard</option>
+        <option>Plastic</option>
+        <option>Metal</option>
+        <option>Electronic Waste</option>
+        <option>Multiple Recyclables</option>
+      </select>
+    </div>
+
+    <button class="primary">Submit for Verification</button>
+  </form>
+
+  <p id="partnerMessage" class="subtitle"></p>
+</div>
+
+</section>
+
+<!-- COLLECTION TRACKING -->
+
+<section id="collection" class="page">
+
+<div class="heading">
+  <div>
+    <h1>Collection Tracking</h1>
+    <div class="subtitle">Monitor collection tasks and segregation quality</div>
+  </div>
+  <button class="primary" onclick="addWorkOrder()">Create Work Order</button>
+</div>
+
+<div class="panel">
+  <h2>Collection Work Orders</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Area</th>
+          <th>Waste Type</th>
+          <th>Assigned Worker</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="workOrders"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Collection Accountability</h2>
+  <p class="subtitle">
+    The framework links collection completion with segregation quality.
+    In a real deployment, verification would require validated collection
+    records and a grievance process before incentives or penalties are applied.
+  </p>
+</div>
+
+</section>
+
+<!-- INCENTIVES -->
+
+<section id="incentives" class="page">
+
+<div class="heading">
+  <div>
+    <h1>Incentive Mechanism</h1>
+    <div class="subtitle">Demonstration of rewards for verified recycling activity</div>
+  </div>
+</div>
+
+<div class="layout">
+
+<div class="panel">
+  <h2>Submit Recycling Transaction</h2>
+
+  <form class="form" onsubmit="submitReward(event)">
+    <div>
+      <label>Material</label>
+      <select id="rewardMaterial">
+        <option value="Paper">Paper / Cardboard</option>
+        <option value="Plastic">Plastic</option>
+        <option value="Metal">Metal</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Weight (kg)</label>
+      <input id="rewardWeight" type="number" min="0.1" step="0.1" required>
+    </div>
+
+    <div>
+      <label>Registered Partner</label>
+      <select id="rewardPartner"></select>
+    </div>
+
+    <button class="primary">Simulate Verified Transaction</button>
+  </form>
+
+  <p id="rewardMessage" class="subtitle"></p>
+</div>
+
+<div class="panel">
+  <h2>Reward Summary</h2>
+
+  <div class="metric">Current Demonstration Points</div>
+  <div class="number green" id="rewardBalance">150</div>
+
+  <div class="reward">
+    <strong>+10 points / kg</strong>
+    <p>Illustrative reward rule for the prototype.</p>
+  </div>
+
+  <p class="subtitle">
+    Actual rewards would depend on verified material recovery,
+    funding arrangements and programme rules.
+  </p>
+</div>
+
+</div>
+
+<div class="panel">
+  <h2>Transaction History</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Material</th><th>Weight</th><th>Partner</th><th>Points</th></tr>
+      </thead>
+      <tbody id="rewardHistory"></tbody>
+    </table>
+  </div>
+</div>
+
+</section>
+
+</main>
+
+<footer>
+  SORT Delhi | Smart Organised Recovery & Transformation<br>
+  Prototype for demonstration purposes only
+</footer>
+
+<script>
+const demo = {
+  households: 2480,
+  points: 150,
+  partners: [
+    {name:"Green Recovery Centre",area:"Rohini",material:"Paper and Cardboard",verified:true},
+    {name:"Delhi Recyclables Hub",area:"Dwarka",material:"Multiple Recyclables",verified:true},
+    {name:"Circular Materials Network",area:"Punjabi Bagh",material:"Plastic",verified:true},
+    {name:"Urban Scrap Collection",area:"Karol Bagh",material:"Metal",verified:false}
+  ],
+  issues: [
+    {area:"Rohini",type:"Missed Collection",description:"Collection delayed",status:"Open"},
+    {area:"Dwarka",type:"Overflowing Community Bin",description:"Bin requires collection",status:"Under Review"}
+  ],
+  orders: [
+    {id:"WO-101",area:"Rohini",type:"Dry Waste",worker:"Collection Team A",status:"In Progress"},
+    {id:"WO-102",area:"Dwarka",type:"Wet Waste",worker:"Collection Team B",status:"Completed"},
+    {id:"WO-103",area:"Karol Bagh",type:"Mixed Waste",worker:"Collection Team C",status:"Pending"}
+  ],
+  rewards: []
+};
+
+function showPage(id,button) {
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  if(button) button.classList.add("active");
+
+  render();
+}
+
+function statusClass(status) {
+  if(status==="Completed" || status==="Verified") return "green";
+  if(status==="In Progress" || status==="Under Review" || status==="Pending") return "orange";
+  return "red";
+}
+
+function renderDashboard() {
+  document.getElementById("dashboardTable").innerHTML = [
+    ["Rohini","Dry Waste","Completed","Good"],
+    ["Dwarka","Wet Waste","In Progress","Good"],
+    ["Karol Bagh","Mixed Waste","Pending","Needs Review"],
+    ["Punjabi Bagh","Dry Waste","Completed","Good"]
+  ].map(r=>`
+    <tr>
+      <td>${r[0]}</td>
+      <td>${r[1]}</td>
+      <td>${r[2]}</td>
+      <td>${r[3]}</td>
+      <td><span class="status ${r[3]==="Good"?"green":"orange"}">${r[3]}</span></td>
+    </tr>
+  `).join("");
+}
+
+function renderPartners() {
+  document.getElementById("partnerTable").innerHTML =
+    demo.partners.map((p,i)=>`
+      <tr>
+        <td>${escapeHTML(p.name)}</td>
+        <td>${escapeHTML(p.area)}</td>
+        <td>${escapeHTML(p.material)}</td>
+        <td><span class="status ${p.verified?"green":"orange"}">${p.verified?"Verified":"Pending"}</span></td>
+        <td><button class="secondary" onclick="partnerDetails(${i})">View</button></td>
+      </tr>
+    `).join("");
+
+  document.getElementById("rewardPartner").innerHTML =
+    demo.partners.filter(p=>p.verified).map(p=>
+      `<option>${escapeHTML(p.name)}</option>`
+    ).join("");
+}
+
+function renderIssues() {
+  document.getElementById("citizenIssues").innerHTML =
+    demo.issues.map(i=>`
+      <tr>
+        <td>${escapeHTML(i.area)}</td>
+        <td>${escapeHTML(i.type)}</td>
+        <td>${escapeHTML(i.description)}</td>
+        <td><span class="status ${statusClass(i.status)}">${escapeHTML(i.status)}</span></td>
+      </tr>
+    `).join("");
+}
+
+function renderOrders() {
+  document.getElementById("workOrders").innerHTML =
+    demo.orders.map((o,i)=>`
+      <tr>
+        <td>${o.id}</td>
+        <td>${escapeHTML(o.area)}</td>
+        <td>${escapeHTML(o.type)}</td>
+        <td>${escapeHTML(o.worker)}</td>
+        <td><span class="status ${statusClass(o.status)}">${o.status}</span></td>
+        <td>
+          ${o.status!=="Completed"?
+          `<button class="secondary" onclick="completeOrder(${i})">Complete</button>`:
+          "Done"}
+        </td>
+      </tr>
+    `).join("");
+}
+
+function renderRewards() {
+  document.getElementById("rewardBalance").textContent=demo.points;
+  document.getElementById("citizenPoints").textContent=demo.points+" points";
+
+  document.getElementById("rewardHistory").innerHTML =
+    demo.rewards.map(r=>`
+      <tr>
+        <td>${escapeHTML(r.material)}</td>
+        <td>${r.weight} kg</td>
+        <td>${escapeHTML(r.partner)}</td>
+        <td class="green">+${r.points}</td>
+      </tr>
+    `).join("");
+}
+
+function render() {
+  document.getElementById("households").textContent=demo.households.toLocaleString();
+  document.getElementById("partnerCount").textContent=demo.partners.length;
+  document.getElementById("issueCount").textContent=demo.issues.length;
+
+  renderDashboard();
+  renderPartners();
+  renderIssues();
+  renderOrders();
+  renderRewards();
+}
+
+function refreshDashboard() {
+  render();
+  alert("Demonstration dashboard refreshed.");
+}
+
+function reportIssue(event) {
+  event.preventDefault();
+
+  demo.issues.unshift({
+    area:document.getElementById("issueArea").value,
+    type:document.getElementById("issueType").value,
+    description:document.getElementById("issueDescription").value,
+    status:"Open"
+  });
+
+  document.getElementById("issueMessage").textContent=
+    "Demo complaint submitted successfully.";
+
+  document.getElementById("issueDescription").value="";
+  render();
+}
+
+function registerPartner(event) {
+  event.preventDefault();
+
+  demo.partners.push({
+    name:document.getElementById("partnerName").value,
+    area:document.getElementById("partnerArea").value,
+    material:document.getElementById("partnerMaterial").value,
+    verified:false
+  });
+
+  document.getElementById("partnerMessage").textContent=
+    "Partner added to the demo directory. Verification is pending.";
+
+  event.target.reset();
+  render();
+}
+
+function partnerDetails(index) {
+  const p=demo.partners[index];
+
+  alert(
+    "Partner: "+p.name+
+    "\nArea: "+p.area+
+    "\nMaterial: "+p.material+
+    "\nVerification: "+(p.verified?"Verified":"Pending")
+  );
+}
+
+function addWorkOrder() {
+  const area=prompt("Enter Delhi area:");
+  if(!area) return;
+
+  demo.orders.unshift({
+    id:"WO-"+(104+demo.orders.length),
+    area:area,
+    type:"Dry Waste",
+    worker:"Unassigned",
+    status:"Pending"
+  });
+
+  render();
+}
+
+function completeOrder(index) {
+  demo.orders[index].status="Completed";
+  render();
+}
+
+function submitReward(event) {
+  event.preventDefault();
+
+  const weight=parseFloat(document.getElementById("rewardWeight").value);
+  const material=document.getElementById("rewardMaterial").value;
+  const partner=document.getElementById("rewardPartner").value;
+
+  if(!Number.isFinite(weight)||weight<=0) {
+    alert("Enter a valid weight.");
+    return;
+  }
+
+  const points=Math.round(weight*10);
+
+  demo.points+=points;
+
+  demo.rewards.unshift({
+    material:material,
+    weight:weight,
+    partner:partner,
+    points:points
+  });
+
+  document.getElementById("rewardMessage").textContent=
+    "Simulated transaction recorded. "+points+" points added.";
+
+  event.target.reset();
+  render();
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[c]);
+}
+
+render();
+</script>
+
+</body>
+</html>
